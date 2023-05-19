@@ -11,7 +11,7 @@ import org.opengis.referencing.operation.TransformException;
 public class SRID5181 {
 
     // prj 파일에 있는 내용임
-    private final String wkt5174 = "PROJCS[\"Korea 2000 / Central Belt\", \n"
+    private final String wkt5181 = "PROJCS[\"Korea 2000 / Central Belt\", \n"
         + "  GEOGCS[\"Korea 2000\", \n"
         + "    DATUM[\"Geocentric datum of Korea\", \n"
         + "      SPHEROID[\"GRS 1980\", 6378137.0, 298.257222101, AUTHORITY[\"EPSG\",\"7019\"]], \n"
@@ -40,7 +40,7 @@ public class SRID5181 {
     public SRID5181() {
         try {
             // reference : http://www.gisdeveloper.co.kr/?p=8942
-            sourceCrs = CRS.parseWKT(wkt5174);
+            sourceCrs = CRS.parseWKT(wkt5181);
             targetCrs = CRS.decode("EPSG:4326");
             engine = CRS.findMathTransform(sourceCrs, targetCrs);
         } catch (FactoryException e) {
