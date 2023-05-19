@@ -17,7 +17,7 @@ public class HexagonAdminRepository {
     private ExecuteQuery executeQuery = new ExecuteQuery();
 
     private final String hexagonTable = getProperty("h3.hexagon");
-    private final String hexagonRoadTable = getProperty("h3.admin");
+    private final String hexagonAdminTable = getProperty("h3.admin");
     private final String sigIndexName = "hexagon_admin_sig_cd_index";
 
     public void run() {
@@ -33,7 +33,7 @@ public class HexagonAdminRepository {
     }
 
     private void createTable(Connection conn) {
-        String ddl = "CREATE TABLE IF NOT EXISTS " + hexagonRoadTable + " (\n"
+        String ddl = "CREATE TABLE IF NOT EXISTS " + hexagonAdminTable + " (\n"
             + "  sig_cd integer,\n"
             + "  hexagon_id bigint,\n"
             + "  CONSTRAINT fk_admin_sector FOREIGN KEY(sig_cd) REFERENCES " + getProperty("admin") + "(sig_cd),\n"
@@ -46,7 +46,7 @@ public class HexagonAdminRepository {
      * 행정 구역에 대한 정보가 있어야 한다.
      */
     private void insertTable(Connection conn) {
-        String query = "INSERT INTO " + hexagonRoadTable
+        String query = "INSERT INTO " + hexagonAdminTable
             + " SELECT a.sig_cd, h.id\n"
             + " FROM " + getProperty("admin.segment")
             + " as a, " + hexagonTable + " as h\n"
@@ -56,10 +56,10 @@ public class HexagonAdminRepository {
     }
 
     private void createSigCodeIndex(Connection conn) {
-        executeQuery.createIndex(conn, sigIndexName, hexagonRoadTable, "btree", "sig_cd");
+        executeQuery.createIndex(conn, sigIndexName, hexagonAdminTable, "btree", "sig_cd");
     }
 
     private void createClusterIndex(Connection conn) {
-        executeQuery.createIndex(conn, hexagonRoadTable, sigIndexName);
+        executeQuery.createIndex(conn, hexagonAdminTable, sigIndexName);
     }
 }
